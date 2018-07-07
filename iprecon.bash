@@ -1,20 +1,28 @@
 #!/bin/bash
 
-#IP address checking script
-#Created by Mattia Campagnano on Tue Jan  2 21:37:04 EST 2018
+# IP address checking script
+# Created by Mattia Campagnano on Tue Jan 2 21:37:04 EST 2018
+
+# This Bash script reads an IP address from the user and validates it.
+
+# Then it performs nslookup, dig, whois and host commands on the supplied IP.
+
 echo -n "Please enter an IP address to check:  ";
 
 read ip
-echo -n "Output file 1: "
+
+# Ask user to indicate four output files, one for each command to be run
+
+echo -n "Output file 1 -nslookup: "
 read output1
 
-echo -n "Output file 2: "
+echo -n "Output file 2 -dig: "
 read output2
 
-echo -n "Output file 3: "
+echo -n "Output file 3 - whois: "
 read output3
 
-echo -n "Output file 4: "
+echo -n "Output file 4 -host: "
 read output4
 
 echo -n "Enter analyst name: "
@@ -77,7 +85,15 @@ else
 
 fi
 
+# If all the checks on the IP address are successfully passed, the script retrieves the current system timestamp and
+# stores it to a variable, then it adds a custom heading to each of the four output files, indicating 
+# which command was performed, who ran the script and when.
+
+# A 2-second sleep time is added after each commands to make sure they exit gracefully.
+
+
 today=$(date)
+
 echo "Output of the nslookup command run on ${ip} performed by ${name} on ${today}" >> "$output1"
 
 echo "Output of the dig command run on ${ip} performed by ${name} on ${today}" >> "$output2"
@@ -86,12 +102,17 @@ echo "Output of the whois command run on ${ip} performed by ${name} on ${today}"
 
 echo "Output of the host command run on ${ip} performed by ${name} on ${today}" >> "$output4"
 echo
+
 nslookup $ip >> $output1
 sleep 2
+
 dig $ip >> $output2
 sleep 2
+
 whois $ip >> $output3
 sleep 2
+
 host $ip >> $output4
 echo
+
 echo "All commands successfully performed. Exiting..."
