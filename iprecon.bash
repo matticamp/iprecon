@@ -25,7 +25,7 @@ read output3
 echo -n "Output file 4 -host: "
 read output4
 
-echo -n "Enter analyst name: "
+echo -n "Enter analyst/pentester name: "
 
 read name
 
